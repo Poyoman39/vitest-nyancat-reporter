@@ -1,7 +1,3 @@
-/*
- * index.js
- * Main file to be exported from the module
- */
-const nyanReporter = require('./nyanReporter')
+const NyanReporter = require('./lib')
 
-module.exports = nyanReporter
+module.exports = NyanReporter;

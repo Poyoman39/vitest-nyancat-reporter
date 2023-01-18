@@ -1,46 +1,52 @@
-# jest-nyancat-reporter
 
-<!--Badges Start-->
+# the-ultimate-unicorn (multi-progress was already taken)
 
-[![npm version](https://badge.fury.io/js/jest-nyancat-reporter.svg)](https://badge.fury.io/js/jest-nyancat-reporter)
+The ultimate unicorn intend (like [multi-progress](https://www.npmjs.com/package/multi-progress)) to add a layer on top of the [progress](https://www.npmjs.com/package/progress) API to allow multiple progress bars.
 
-<!--Badges End-->
+API and implementation differs a bit.
 
-This was forked from [abdulhannanali/jest-nyan-reporter](https://github.com/abdulhannanali/jest-nyan-reporter), which has a bug reported in 2017, and a PR submitted but still hasn't been merged. I'm taking that to mean that the original repo is abandoned.
-
-![Jest Nyan Reporter Image](https://i.imgur.com/oPawvXV.png)
-
-## Installation
-
-You can install by typing the following command in terminal.
-
-For **Yarn**
+## Quick start
 
 ```
-yarn add -D jest-nyancat-reporter
+npm i the-ultimate-unicorn
 ```
-
-For **NPM**
-
 ```
-npm install --save-dev jest-nyancat-reporter
-```
+const ProgressBar = require('the-ultimate-unicorn');
 
-### Configure
+// ...
 
-In order to configure the Nyancat Reporter, you can add the following configuration in your `package.json` under jest property.
+const progressBar = new ProgressBar({ title: 'Potatoes', total: 142 });
 
-```json
-{
-  "jest": {
-    "reporters": [
-      [
-        "jest-nyancat-reporter",
-        {
-          "suppressErrorReporter": false
-        }
-      ]
-    ]
+const intervalId = setInterval(() => {
+  progressBar.tick();
+
+  if (progressBar.isComplete) {
+    clearInterval(intervalId);
   }
-}
+}, 100);
 ```
+
+## Doc
+
+Api is very similar to the [progress](https://www.npmjs.com/package/progress) one. With subtile differences.
+
+---
+### new ProgressBar(options?)
+Create a  new progressBar
+
+ - **options.total** *(default: 100)* ***int***: Total tick to consider the progressBar complete
+ - **options.title** *(default: '')* ***string***: Title of the progressBar
+ - **options.current** *(default 0)* ***int***: Initial progressBar ticks
+ - **options.chars** *(default `{ complete: '=', incomplete: '-' }`)* ***object***: Characters use to draw the progressBar
+ - **options.format** *(default ':title [:bar] :etas')* ***string***: Template string used to draw the progressBar
+
+---
+### progressBar.tick()
+Add a tick to a ProgressBar instance
+
+---
+### *Static properties*
+ - **ProgressBar.renderThrottle** *(default 16)* ***int***: Minimum period beteween 2 progressBar render
+*(default: 16)*
+- **ProgressBar.stream** *(default  process.stderr)* ***stream***: Output stream
+
